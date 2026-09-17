@@ -562,9 +562,6 @@ export default function SubscribersPage() {
           </div>
         </div>
       )}
-    </div>
-  );
-
       {showEdit && editSub && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
@@ -576,14 +573,16 @@ export default function SubscribersPage() {
               className="space-y-3"
               onSubmit={(e) => {
                 e.preventDefault();
+                if (!editSub) return;
+                const sub = editSub;
                 updateMutation.mutate({
-                  id: editSub.id,
+                  id: sub.id,
                   data: {
-                    full_name: editSub.full_name,
-                    email: editSub.email,
-                    phone: editSub.phone || '',
-                    company: editSub.company,
-                    is_subscribed: editSub.is_subscribed,
+                    full_name: sub.full_name,
+                    email: sub.email,
+                    phone: sub.phone || '',
+                    company: sub.company,
+                    is_subscribed: sub.is_subscribed,
                   },
                 });
               }}
@@ -592,25 +591,25 @@ export default function SubscribersPage() {
                 <label className="text-xs font-medium text-slate-600">Full name</label>
                 <input className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
                   value={editSub.full_name}
-                  onChange={(e) => setEditSub({ ...editSub, full_name: e.target.value })} />
+                  onChange={(e) => setEditSub((prev) => prev ? { ...prev, full_name: e.target.value } : prev)} />
               </div>
               <div>
                 <label className="text-xs font-medium text-slate-600">Email</label>
                 <input type="email" className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
                   value={editSub.email}
-                  onChange={(e) => setEditSub({ ...editSub, email: e.target.value })} />
+                  onChange={(e) => setEditSub((prev) => prev ? { ...prev, email: e.target.value } : prev)} />
               </div>
               <div>
                 <label className="text-xs font-medium text-slate-600">Phone</label>
                 <input className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"
                   value={editSub.phone || ''}
-                  onChange={(e) => setEditSub({ ...editSub, phone: e.target.value })} />
+                  onChange={(e) => setEditSub((prev) => prev ? { ...prev, phone: e.target.value } : prev)} />
               </div>
               <div>
                 <label className="text-xs font-medium text-slate-600">Company</label>
                 <select className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm bg-white"
                   value={editSub.company}
-                  onChange={(e) => setEditSub({ ...editSub, company: e.target.value })}>
+                  onChange={(e) => setEditSub((prev) => prev ? { ...prev, company: e.target.value } : prev)}>
                   {companies.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
@@ -624,5 +623,6 @@ export default function SubscribersPage() {
           </div>
         </div>
       )}
-
+    </div>
+  );
 }

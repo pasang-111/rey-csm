@@ -31,11 +31,15 @@ services:
         value: "noreply@reycorporate.com"
       - key: PYTHON_VERSION
         value: "3.12.0"
+      - key: PUBLIC_BASE_URL
+        sync: false
 
   - type: redis
     name: rey-cms-redis
     plan: starter
     maxmemoryPolicy: allkeys-lru
+    # Required by Render. Empty list = only private network (web service can still connect).
+    ipAllowList: []
 
 databases:
   - name: rey-cms-db

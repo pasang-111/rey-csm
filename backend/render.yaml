@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: rey-cms-api
+    env: python
+    plan: starter
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput"
+    startCommand: "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --timeout 120"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "false"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rey-cms-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: rey-cms-redis
+          property: connectionString
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://rey-cms.vercel.app,http://localhost:3000"
+      - key: EMAIL_BACKEND
+        value: "anymail.backends.sendgrid.EmailBackend"
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: DEFAULT_FROM_EMAIL
+        value: "noreply@reycorporate.com"
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+
+  - type: redis
+    name: rey-cms-redis
+    plan: starter
+    maxmemoryPolicy: allkeys-lru
+
+databases:
+  - name: rey-cms-db
+    plan: starter
+    databaseName: reycms
+    user: reycms

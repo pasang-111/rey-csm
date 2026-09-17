@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ subject }}</title>
+  <style>
+    body { margin: 0; padding: 0; background: #f4f4f7; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; padding: 48px 16px; }
+    .main { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(10,37,64,0.1); }
+    .header { background: linear-gradient(135deg, {{ primary_color|default:"#0A2540" }}, {{ secondary_color|default:"#C9A227" }}); padding: 44px 40px; text-align: center; }
+    .logo { max-width: 150px; height: auto; }
+    .content { padding: 40px; color: #333; line-height: 1.75; }
+    .greeting { font-size: 22px; font-weight: 600; color: {{ primary_color|default:"#0A2540" }}; margin-bottom: 18px; }
+    .message { font-size: 16px; color: #555; }
+    .cta { display: inline-block; background: {{ primary_color|default:"#0A2540" }}; color: #fff !important; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 600; margin: 24px 0; }
+    .footer { background: #fafafa; padding: 24px 40px; text-align: center; font-size: 13px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <div class="header">
+        {% if logo_url %}<img src="{{ logo_url }}" alt="{{ company.name }}" class="logo">{% else %}
+        <h1 style="color:#fff;margin:0;font-size:24px;">{{ company.short_name|default:company.name }}</h1>{% endif %}
+      </div>
+      <div class="content">
+        <div class="greeting">Dear {{ full_name }},</div>
+        <div class="message">
+          {{ body_content|safe }}
+        </div>
+        {% if cta_url and cta_text %}
+          <a href="{{ cta_url }}" class="cta">{{ cta_text }}</a>
+        {% endif %}
+        <p style="font-size:14px;color:#777;margin-top:28px;">
+          With appreciation,<br>
+          <strong>The {{ company.name }} Team</strong>
+        </p>
+      </div>
+      <div class="footer">
+        © {{ year }} {{ company.name }} · <a href="{{ unsubscribe_url|default:'#' }}" style="color:#0A2540;">Unsubscribe</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

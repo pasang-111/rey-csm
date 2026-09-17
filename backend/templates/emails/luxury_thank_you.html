@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ subject }}</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f4f4f7; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f4f4f7; padding: 40px 0; }
+    .main { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+    .header { background: linear-gradient(135deg, {{ primary_color|default:"#0A2540" }}, {{ secondary_color|default:"#1E3A5F" }}); padding: 40px 40px 30px; text-align: center; }
+    .logo { max-width: 180px; height: auto; }
+    .content { padding: 40px 40px 30px; color: #333; line-height: 1.7; }
+    .greeting { font-size: 22px; font-weight: 600; color: {{ primary_color|default:"#0A2540" }}; margin-bottom: 16px; }
+    .message { font-size: 16px; color: #555; margin-bottom: 28px; }
+    .cta { display: inline-block; background: {{ primary_color|default:"#0A2540" }}; color: #fff !important; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 15px; margin: 10px 0 30px; }
+    .divider { height: 1px; background: #eee; margin: 30px 0; }
+    .footer { background: #fafafa; padding: 28px 40px; text-align: center; font-size: 13px; color: #888; }
+    .footer a { color: {{ primary_color|default:"#0A2540" }}; text-decoration: none; }
+    .social { margin: 16px 0; }
+    .social a { display: inline-block; margin: 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <div class="header">
+        {% if logo_url %}
+          <img src="{{ logo_url }}" alt="{{ company.name }}" class="logo">
+        {% else %}
+          <h1 style="color:#fff;margin:0;font-size:28px;letter-spacing:2px;">{{ company.short_name|default:company.name }}</h1>
+        {% endif %}
+      </div>
+      <div class="content">
+        <div class="greeting">Dear {{ full_name }},</div>
+        <div class="message">
+          {{ body_content|safe }}
+        </div>
+        {% if cta_url and cta_text %}
+          <a href="{{ cta_url }}" class="cta">{{ cta_text }}</a>
+        {% endif %}
+        <div class="divider"></div>
+        <p style="font-size:14px;color:#777;">
+          Warm regards,<br>
+          <strong>The {{ company.name }} Team</strong>
+        </p>
+      </div>
+      <div class="footer">
+        <p>{{ company.tagline|default:"" }}</p>
+        <p>
+          {% if company.address %}{{ company.address }}<br>{% endif %}
+          {% if company.phone %}{{ company.phone }} · {% endif %}
+          <a href="mailto:{{ company.support_email|default:company.from_email }}">{{ company.support_email|default:company.from_email }}</a>
+        </p>
+        <p style="margin-top:20px;font-size:12px;color:#aaa;">
+          © {{ year }} {{ company.name }}. All rights reserved.<br>
+          <a href="{{ unsubscribe_url|default:'#' }}">Unsubscribe</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

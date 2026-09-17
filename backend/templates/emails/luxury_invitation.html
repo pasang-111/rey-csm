@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ subject }}</title>
+  <style>
+    body { margin: 0; padding: 0; background: #f0f2f5; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; padding: 48px 16px; background: #f0f2f5; }
+    .main { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(10,37,64,0.12); }
+    .header { background: linear-gradient(135deg, {{ primary_color|default:"#0A2540" }} 0%, {{ secondary_color|default:"#1E3A5F" }} 100%); padding: 48px 40px 40px; text-align: center; }
+    .logo { max-width: 160px; height: auto; margin-bottom: 16px; }
+    .header-title { color: #fff; font-size: 28px; font-weight: 600; letter-spacing: 0.5px; margin: 0; }
+    .header-sub { color: rgba(255,255,255,0.85); font-size: 14px; margin-top: 8px; }
+    .content { padding: 40px 40px 32px; color: #333; line-height: 1.7; }
+    .greeting { font-size: 20px; font-weight: 600; color: {{ primary_color|default:"#0A2540" }}; margin-bottom: 20px; }
+    .message { font-size: 16px; color: #444; margin-bottom: 28px; }
+    .event-card { background: #f8fafc; border-left: 4px solid {{ secondary_color|default:"#C9A227" }}; padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 24px 0; }
+    .event-card strong { color: {{ primary_color|default:"#0A2540" }}; }
+    .cta { display: inline-block; background: {{ primary_color|default:"#0A2540" }}; color: #fff !important; text-decoration: none; padding: 16px 36px; border-radius: 10px; font-weight: 600; font-size: 15px; margin: 12px 0 28px; letter-spacing: 0.3px; }
+    .cta:hover { opacity: 0.92; }
+    .footer { background: #fafafa; padding: 28px 40px; text-align: center; font-size: 13px; color: #888; border-top: 1px solid #eee; }
+    .footer a { color: {{ primary_color|default:"#0A2540" }}; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <div class="header">
+        {% if logo_url %}<img src="{{ logo_url }}" alt="{{ company.name }}" class="logo">{% endif %}
+        <h1 class="header-title">You're Invited</h1>
+        <p class="header-sub">{{ company.name }}</p>
+      </div>
+      <div class="content">
+        <div class="greeting">Dear {{ full_name }},</div>
+        <div class="message">
+          {{ body_content|safe }}
+        </div>
+        {% if event_details %}
+        <div class="event-card">
+          {{ event_details|safe }}
+        </div>
+        {% endif %}
+        {% if cta_url and cta_text %}
+          <a href="{{ cta_url }}" class="cta">{{ cta_text }}</a>
+        {% endif %}
+        <p style="font-size:14px;color:#666;margin-top:32px;">
+          We look forward to seeing you.<br>
+          <strong>The {{ company.name }} Team</strong>
+        </p>
+      </div>
+      <div class="footer">
+        <p>{{ company.tagline|default:"" }}</p>
+        <p>
+          {% if company.address %}{{ company.address }}<br>{% endif %}
+          <a href="mailto:{{ company.support_email|default:company.from_email }}">{{ company.support_email|default:company.from_email }}</a>
+        </p>
+        <p style="margin-top:16px;font-size:11px;color:#aaa;">
+          © {{ year }} {{ company.name }}. All rights reserved.<br>
+          <a href="{{ unsubscribe_url|default:'#' }}">Unsubscribe</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

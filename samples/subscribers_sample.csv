@@ -1,0 +1,9 @@
+full_name,email,phone,home_address,is_subscribed
+James Wilson,james.wilson@example.com.au,+61 412 345 678,"12 George St, Sydney NSW 2000",true
+Sarah Chen,sarah.chen@example.com.au,+61 423 456 789,"45 Collins St, Melbourne VIC 3000",true
+Michael Brown,michael.brown@example.com.au,+61 434 567 890,"88 Queen St, Brisbane QLD 4000",true
+Emily Watson,emily.watson@example.com.au,+61 445 678 901,"3 King William St, Adelaide SA 5000",yes
+David Lee,david.lee@example.com.au,+61 456 789 012,"100 Hay St, Perth WA 6000",1
+Lisa Nguyen,lisa.nguyen@example.com.au,+61 467 890 123,"22 Macquarie St, Sydney NSW 2000",true
+Priya Sharma,priya.sharma@example.com.au,+61 478 901 234,"7 Bourke St, Melbourne VIC 3000",true
+Tom Anderson,tom.anderson@example.com.au,,,"15 Ann St, Brisbane QLD 4000",false

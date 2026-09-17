@@ -20,7 +20,7 @@ const MARQUEE_ITEMS = [...SUB_COMPANIES, ...SUB_COMPANIES];
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const [email, setEmail] = useState('admin@reycorp.com.au');
+  const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,11 +30,11 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     try {
-      await login(email, password);
+      await login(username, password);
     } catch (err: any) {
       setError(
         err?.response?.data?.detail ||
-          'Invalid credentials. Try admin@reycorp.com.au'
+          'Invalid credentials. Use the Django username from createsuperuser.'
       );
     } finally {
       setLoading(false);
@@ -100,14 +100,15 @@ export default function LoginPage() {
         >
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5">
-              Email
+              Username
             </label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              autoComplete="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0A2540]/30 text-sm"
-              placeholder="admin@reycorp.com.au"
+              placeholder="admin"
               required
             />
           </div>
@@ -138,8 +139,7 @@ export default function LoginPage() {
             Sign in
           </button>
           <p className="text-xs text-center text-slate-400">
-            Use{' '}
-            <span className="font-mono text-slate-500">admin@reycorp.com.au</span>
+            Sign in with your <span className="font-mono text-slate-500">username</span> (from createsuperuser)
           </p>
         </form>
       </div>

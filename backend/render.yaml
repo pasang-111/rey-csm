@@ -38,11 +38,11 @@ services:
     name: rey-cms-redis
     plan: starter
     maxmemoryPolicy: allkeys-lru
-    # Required by Render. Empty list = only private network (web service can still connect).
+    # Required by Render. [] = private network only (web service can still connect).
     ipAllowList: []
 
 databases:
   - name: rey-cms-db
-    plan: starter
+    plan: basic-256mb
     databaseName: reycms
     user: reycms
